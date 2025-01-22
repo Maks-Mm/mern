@@ -1,1 +1,63 @@
-https://www.youtube.com/watch?v=4nKWREmCvsE tutorial
+https://www.youtube.com/watch?v=4nKWREmCvsE tutorial (time 11.00)
+
+ C:\Users\Maksym\Desktop\einFolder3\mern\mern> node --env-file=config.env server
+C:\Program Files\nodejs\node.exe: config.env: not found
+PS C:\Users\Maksym\Desktop\einFolder3\mern\mern> 
+ChatGPT:
+ChatGPT
+
+The error message you are encountering indicates that Node.js cannot find the specified config.env file. Let's break down how to resolve this issue step by step.
+Steps to Resolve the Issue
+
+    Check the File Path:
+        Ensure that the config.env file actually exists in the directory from which you're running the Node.js command. In your case, the file should be in C:\Users\Maksym\Desktop\einFolder3\mern\mern.
+
+    Check File Name and Extension:
+        Verify that the file name is exactly config.env and not something like config.env.txt. Sometimes, file extensions are hidden on Windows, which can lead to confusion. To check:
+            Open the folder where the file is located.
+            Go to the View tab in File Explorer.
+            Make sure the File name extensions checkbox is checked. This will allow you to see the full name of the file.
+
+    Correct Command Usage:
+        The command you're using (node --env-file=config.env server) might not be standard. The Node.js command-line options don’t directly support an --env-file argument. Instead, you can use packages like dotenv or cross-env to manage environment variables.
+
+    Here’s how you can set it up using dotenv:
+
+    Step 1: Install dotenv (if you haven't already):
+
+npm install dotenv
+
+Step 2: Create a .env file instead of config.env in your project root and add your environment variables there.
+
+Step 3: Modify your server code to use dotenv at the beginning of your entry file (e.g., server.js):
+
+require('dotenv').config(); // Load environment variables from .env file
+
+Step 4: Run your server without specifying the --env-file:
+
+node server.js
+
+Alternative Using cross-env:
+
+    If you want to set environment variables directly when running your command, you can use the cross-env package. Install it with:
+
+npm install cross-env
+
+Then you can run your server like this:
+
+    cross-env NODE_ENV=production node server.js
+
+Summary
+
+    Ensure the config.env file exists in the correct directory.
+    Check for correct naming and file extensions.
+    Use dotenv or cross-env to manage environment variables.
+    Run your server without using the --env-file flag.
+
+Example of Running Your Node.js Application
+
+Assuming you’ve created a .env file and updated your code as described:
+
+C:\Users\Maksym\Desktop\einFolder3\mern\mern> node server.js
+
+If you follow these steps and ensure everything is set up correctly, you should be able to run your server without the file not found error. If you still encounter issues, please let me know!
