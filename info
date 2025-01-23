@@ -1,4 +1,6 @@
-https://www.youtube.com/watch?v=4nKWREmCvsE tutorial (time 11.00)
+https://www.youtube.com/watch?v=4nKWREmCvsE tutorial (time 13.00)
+
+command to start the backend : node server.js
 
  C:\Users\Maksym\Desktop\einFolder3\mern\mern> node --env-file=config.env server
 C:\Program Files\nodejs\node.exe: config.env: not found
