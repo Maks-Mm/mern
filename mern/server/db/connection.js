@@ -31,3 +31,4 @@ async function connectToMongoDB() {
 
 const db = await connectToMongoDB(); // Use await to get the connected database
 export default db;
+ //new connection

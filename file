@@ -1,0 +1,2 @@
+PORT=5050
+ATLAS_URI="mongodb+srv://maxfilawwwrest:zAP6VgwCsn0jc2AR@cluster0.6envw.mongodb.net/analyzer?retryWrites=true&w=majority&appName=Cluster0"
