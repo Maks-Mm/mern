@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+// Record component to display individual record
 const Record = (props) => (
   <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
     <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
@@ -35,10 +36,11 @@ const Record = (props) => (
   </tr>
 );
 
+// RecordList component to manage the state and display the table of records
 export default function RecordList() {
   const [records, setRecords] = useState([]);
 
-  // This method fetches the records from the database.
+  // Fetch the records from the database
   useEffect(() => {
     async function getRecords() {
       const response = await fetch(`http://localhost:5050/record/`);
@@ -51,10 +53,9 @@ export default function RecordList() {
       setRecords(records);
     }
     getRecords();
-    return;
-  }, [records.length]);
+  }, []); // Empty dependency array ensures this runs once on mount
 
-  // This method will delete a record
+  // Method to delete a record
   async function deleteRecord(id) {
     await fetch(`http://localhost:5050/record/${id}`, {
       method: "DELETE",
@@ -63,20 +64,18 @@ export default function RecordList() {
     setRecords(newRecords);
   }
 
-  // This method will map out the records on the table
+  // Method to map out the records in the table
   function recordList() {
-    return records.map((record) => {
-      return (
-        <Record
-          record={record}
-          deleteRecord={() => deleteRecord(record._id)}
-          key={record._id}
-        />
-      );
-    });
+    return records.map((record) => (
+      <Record
+        record={record}
+        deleteRecord={() => deleteRecord(record._id)}
+        key={record._id}
+      />
+    ));
   }
 
-  // This following section will display the table with the records of individuals.
+  // Render the table with the records
   return (
     <>
       <h3 className="text-lg font-semibold p-4">Employee Records</h3>
