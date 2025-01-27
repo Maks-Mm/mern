@@ -1,3 +1,2 @@
-/* src/index.css */
-@import "tailwindcss/preflight"; /* Replace @tailwind base; */
-@tailwind utilities;              /* Keep only utilities */
+@import "tailwindcss/preflight"; /* Replaces @tailwind base */
+@tailwind utilities;            /* Includes all utility classes */
