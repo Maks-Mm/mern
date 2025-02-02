@@ -8,10 +8,13 @@ dotenv.config({ path: "config.env" });
 
 const ATLAS_URI = process.env.ATLAS_URI;
 const PORT = process.env.PORT || 5050;
+console.log("ATLAS_URI:", process.env.ATLAS_URI);
+
 
 const app = express();
+app.use(cors({ origin: "http://localhost:5173" }));
 
-app.use(cors());
+//app.use(cors());
 app.use(express.json());
 app.use("/record", records);
 

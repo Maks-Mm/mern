@@ -1,6 +1,18 @@
 https://www.youtube.com/watch?v=4nKWREmCvsE tutorial (time 13.00)
 
+this is old key from .env ATLAS_URI=mongodb+srv://maxfilawwwrest:zAP6VgwCsn0jc2AR@cluster0.6envw.mongodb.net/analyzer?retryWrites=true&w=majority&appName=Cluster0
+
 command to start the backend : node server.js
+
+
+
+
+
+
+
+
+
+
 
 
 
