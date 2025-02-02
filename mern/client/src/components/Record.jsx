@@ -8,49 +8,58 @@ export default function Record() {
     level: "",
   });
   const [isNew, setIsNew] = useState(true);
+  const [error, setError] = useState(null); // State to handle errors
   const params = useParams();
   const navigate = useNavigate();
 
+  // Fetch record data if editing an existing record
   useEffect(() => {
     async function fetchData() {
       const id = params.id?.toString() || undefined;
-      if(!id) return;
+      if (!id) return; // Exit if no ID (new record)
       setIsNew(false);
-      const response = await fetch(
-        `http://localhost:5050/record/${params.id.toString()}`
-      );
-      if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
-        console.error(message);
-        return;
+
+      try {
+        const response = await fetch(
+          `http://localhost:5050/record/${params.id.toString()}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`An error has occurred: ${response.statusText}`);
+        }
+
+        const record = await response.json();
+        if (!record) {
+          console.warn(`Record with id ${id} not found`);
+          navigate("/");
+          return;
+        }
+
+        setForm(record); // Populate form with fetched data
+      } catch (error) {
+        console.error("Failed to fetch record:", error);
+        setError("Failed to fetch record. Please try again.");
       }
-      const record = await response.json();
-      if (!record) {
-        console.warn(`Record with id ${id} not found`);
-        navigate("/");
-        return;
-      }
-      setForm(record);
     }
+
     fetchData();
-    return;
   }, [params.id, navigate]);
 
-  // These methods will update the state properties.
+  // Update form state
   function updateForm(value) {
-    return setForm((prev) => {
-      return { ...prev, ...value };
-    });
+    return setForm((prev) => ({ ...prev, ...value }));
   }
 
-  // This function will handle the submission.
+  // Handle form submission
   async function onSubmit(e) {
     e.preventDefault();
     const person = { ...form };
+    setError(null); // Reset error state
+
     try {
       let response;
       if (isNew) {
-        // if we are adding a new record we will POST to /record.
+        // POST request for new record
         response = await fetch("http://localhost:5050/record", {
           method: "POST",
           headers: {
@@ -59,7 +68,7 @@ export default function Record() {
           body: JSON.stringify(person),
         });
       } else {
-        // if we are updating a record we will PATCH to /record/:id.
+        // PATCH request for updating record
         response = await fetch(`http://localhost:5050/record/${params.id}`, {
           method: "PATCH",
           headers: {
@@ -70,20 +79,29 @@ export default function Record() {
       }
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
-    } catch (error) {
-      console.error('A problem occurred with your fetch operation: ', error);
-    } finally {
+
+      // Reset form and navigate to home page
       setForm({ name: "", position: "", level: "" });
       navigate("/");
+    } catch (error) {
+      console.error("A problem occurred with your fetch operation:", error);
+      setError(error.message || "An error occurred. Please try again.");
     }
   }
 
-  // This following section will display the form that takes the input from the user.
   return (
     <>
-      <h3 className="text-lg font-semibold p-4">Create/Update Employee Record</h3>
+      <h3 className="text-lg font-semibold p-4">
+        {isNew ? "Create" : "Update"} Employee Record
+      </h3>
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
       <form
         onSubmit={onSubmit}
         className="border rounded-lg overflow-hidden p-4"
@@ -94,12 +112,12 @@ export default function Record() {
               Employee Info
             </h2>
             <p className="mt-1 text-sm leading-6 text-slate-600">
-              This information will be displayed publicly so be careful what you
+              This information will be displayed publicly, so be careful what you
               share.
             </p>
           </div>
 
-          <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
+          <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8">
             <div className="sm:col-span-4">
               <label
                 htmlFor="name"
@@ -117,6 +135,7 @@ export default function Record() {
                     placeholder="First Last"
                     value={form.name}
                     onChange={(e) => updateForm({ name: e.target.value })}
+                    required
                   />
                 </div>
               </div>
@@ -138,6 +157,7 @@ export default function Record() {
                     placeholder="Developer Advocate"
                     value={form.position}
                     onChange={(e) => updateForm({ position: e.target.value })}
+                    required
                   />
                 </div>
               </div>
@@ -155,6 +175,7 @@ export default function Record() {
                       className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
                       checked={form.level === "Intern"}
                       onChange={(e) => updateForm({ level: e.target.value })}
+                      required
                     />
                     <label
                       htmlFor="positionIntern"
@@ -200,7 +221,7 @@ export default function Record() {
         </div>
         <input
           type="submit"
-          value="Save Employee Record"
+          value={isNew ? "Create Employee Record" : "Update Employee Record"}
           className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
         />
       </form>
