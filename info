@@ -1,37 +1,5 @@
 https://www.youtube.com/watch?v=4nKWREmCvsE tutorial (time 13.00)
 
-this is old key from .env ATLAS_URI=mongodb+srv://maxfilawwwrest:zAP6VgwCsn0jc2AR@cluster0.6envw.mongodb.net/analyzer?retryWrites=true&w=majority&appName=Cluster0
-
-command to start the backend : node server.js
 
 
 
-
-
-
-
-
-
-
-Uncaught (in promise) TypeError: NetworkError when attempting to fetch resource.
-    getRecords RecordList.jsx:46
-    AsyncFunctionThrow self-hosted:804
-    (Async: async)
-    RecordList RecordList.jsx:55
-    React 8
-    workLoop scheduler.development.js:266
-    flushWork scheduler.development.js:239
-    performWorkUntilDeadline scheduler.development.js:533
-    (Async: EventHandlerNonNull)
-    js scheduler.development.js:571
-    js scheduler.development.js:633
-    __require chunk-DC5AMYBS.js:9
-    js index.js:6
-    __require chunk-DC5AMYBS.js:9
-    React 2
-    __require chunk-DC5AMYBS.js:9
-    js React
-    __require chunk-DC5AMYBS.js:9
-    js React
-    __require chunk-DC5AMYBS.js:9
-    <anonymous> react-dom_client.js:38
