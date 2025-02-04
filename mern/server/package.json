@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node server.js"
+    "start":"node path/to/your/server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +16,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongodb": "^6.12.0"
-  }
+  },
+  "engines": {
+  "node": "18.x"
+}
 }
