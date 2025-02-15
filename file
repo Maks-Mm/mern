@@ -2,3 +2,5 @@ PORT=5050
 ATLAS_URI="mongodb+srv://maxfilawwwrest:zAP6VgwCsn0jc2AR@cluster0.6envw.mongodb.net/analyzer?retryWrites=true&w=majority&appName=Cluster0"
 
 man muss client site und server sinchronisieren 
+
+good connect to mongooDB feth of port it corrected to client page 
